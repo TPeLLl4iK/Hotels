@@ -1,0 +1,2 @@
+class RoomBookingError(Exception):
+    pass
