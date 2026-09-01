@@ -12,12 +12,13 @@ from src.tasks.celery_app import celery_instance
 @celery_instance.task
 def test_task():
     sleep(5)
-    print('Done')
+    print("Done")
+
 
 @celery_instance.task
 def resize_and_save_image(source_path: str) -> list[str]:
 
-    output_dir = 'src/static/images'
+    output_dir = "src/static/images"
     widths = (1000, 500, 200)
 
     os.makedirs(output_dir, exist_ok=True)
@@ -46,11 +47,12 @@ def resize_and_save_image(source_path: str) -> list[str]:
 
     return saved_paths
 
+
 async def get_booking_with_today_checkin_helper():
     async with DBManager(session_factory=async_session_maker_null_pool) as db:
         await db.bookings.get_booking_with_today_checkin()
 
 
-@celery_instance.task(name='booking_today_checkin')
+@celery_instance.task(name="booking_today_checkin")
 def send_emails_to_users_with_today_checkin():
     asyncio.run(get_booking_with_today_checkin_helper)

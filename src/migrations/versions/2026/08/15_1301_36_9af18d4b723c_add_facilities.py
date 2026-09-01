@@ -1,4 +1,3 @@
-
 from collections.abc import Sequence
 
 import sqlalchemy as sa
@@ -39,6 +38,7 @@ def upgrade() -> None:
         type_=sa.String(length=20),
         existing_nullable=False,
     )
+
 
 def downgrade() -> None:
     op.alter_column(

@@ -9,8 +9,7 @@ ENV_FILE = BASE_DIR / (".env.test" if os.getenv("MODE") == "TEST" else ".env")
 
 
 class Settings(BaseSettings):
-    MODE: Literal['TEST', 'LOCAL', 'DEV', 'PROD']
-
+    MODE: Literal["TEST", "LOCAL", "DEV", "PROD"]
 
     DB_HOST: str
     DB_PORT: int
@@ -23,7 +22,7 @@ class Settings(BaseSettings):
 
     @property
     def REDIS_URL(self):
-        return f'redis://{self.REDIS_HOST}:{self.REDIS_PORT}'
+        return f"redis://{self.REDIS_HOST}:{self.REDIS_PORT}"
 
     @property
     def DB_URL(self):

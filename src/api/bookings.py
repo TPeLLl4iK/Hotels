@@ -15,27 +15,29 @@ async def add_booking(
 
     room = await db.rooms.get_one_or_none(id=booking_data.room_id)
     room_price: int = room.price
-    _booking_data = BookingsAdd(  
+    _booking_data = BookingsAdd(
         user_id=user_id,
         price=room_price,
         **booking_data.model_dump(),
     )
 
     await db.bookings.add_booking(_booking_data, hotel_id=room.hotel_id)
-    booking = await db.bookings.add(_booking_data )
+    booking = await db.bookings.add(_booking_data)
     await db.commit()
-    return {'status': 'Added', 'data': booking}
+    return {"status": "Added", "data": booking}
 
-@router.get('', summary='Получить все бронирования')
+
+@router.get("", summary="Получить все бронирования")
 async def get_all_bookings(
     db: DBDep,
 ):
     return await db.bookings.get_all()
 
-@router.get('/me', summary='Получить бронирования аутентифицированного пользователя')
+
+@router.get("/me", summary="Получить бронирования аутентифицированного пользователя")
 async def get_booking(
     user_id: UserIdDep,
     db: DBDep,
-    ):
+):
 
     return await db.bookings.get_filtered(user_id=user_id)

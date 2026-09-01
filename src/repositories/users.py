@@ -17,4 +17,3 @@ class UsersRepository(BaseRepository):
         result = await self.session.execute(query)
         model = result.scalars().one()
         return UsersDataMapperWithHashedPass.map_to_domain_entity(model)
-        

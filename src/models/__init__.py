@@ -5,10 +5,10 @@ from src.models.rooms import RoomsOrm
 from src.models.users import UsersOrm
 
 __all__ = [
-    'BookingsOrm',
-    'FacilitiesOrm',
-    'HotelsOrm',
-    'RoomsFacilitiesOrm',
-    'RoomsOrm',
-    'UsersOrm',
+    "BookingsOrm",
+    "FacilitiesOrm",
+    "HotelsOrm",
+    "RoomsFacilitiesOrm",
+    "RoomsOrm",
+    "UsersOrm",
 ]

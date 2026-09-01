@@ -1,5 +1,3 @@
-
-
 from src.models.bookings import BookingsOrm
 from src.models.facilities import FacilitiesOrm, RoomsFacilitiesOrm
 from src.models.hotels import HotelsOrm
@@ -17,9 +15,11 @@ class HotelsDataMapper(DataMapper):
     db_model = HotelsOrm
     schema = Hotels
 
+
 class RoomsDataMapper(DataMapper):
     db_model = RoomsOrm
     schema = Rooms
+
 
 class RoomsDataWithRelsMapper(DataMapper):
     db_model = RoomsOrm
@@ -30,17 +30,21 @@ class UsersDataMapper(DataMapper):
     db_model = UsersOrm
     schema = Users
 
+
 class UsersDataMapperWithHashedPass(DataMapper):
     db_model = UsersOrm
     schema = UsersWithHashedPass
+
 
 class BookingsDataMapper(DataMapper):
     db_model = BookingsOrm
     schema = Bookings
 
+
 class FacilitiesDataMapper(DataMapper):
     db_model = FacilitiesOrm
     schema = Facilities
+
 
 class RoomsFacilitiesDataMapper(DataMapper):
     db_model = RoomsFacilitiesOrm

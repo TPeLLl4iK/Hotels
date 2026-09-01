@@ -1,5 +1,3 @@
-
-
 from collections.abc import Sequence
 
 from alembic import op
@@ -11,7 +9,8 @@ depends_on: str | Sequence[str] | None = None
 
 
 def upgrade() -> None:
-    op.alter_column('bookings', 'date_to1', new_column_name='date_from')
+    op.alter_column("bookings", "date_to1", new_column_name="date_from")
+
 
 def downgrade() -> None:
     op.alter_column()

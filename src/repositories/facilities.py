@@ -13,7 +13,6 @@ class FacilitiesRepository(BaseRepository):
     mapper = FacilitiesDataMapper
 
 
-
 class RoomsFacilitiesRepository(BaseRepository):
     model = RoomsFacilitiesOrm
     mapper = RoomsFacilitiesDataMapper

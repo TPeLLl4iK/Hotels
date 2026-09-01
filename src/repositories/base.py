@@ -8,7 +8,6 @@ class BaseRepository:
     model = None
     mapper: DataMapper = None
 
-
     def __init__(self, session):
         self.session = session
 
@@ -33,7 +32,9 @@ class BaseRepository:
         return self.mapper.map_to_domain_entity(model)
 
     async def add(self, data: BaseModel):
-        add_data_stmt = insert(self.model).values(**data.model_dump()).returning(self.model)
+        add_data_stmt = (
+            insert(self.model).values(**data.model_dump()).returning(self.model)
+        )
         result = await self.session.execute(add_data_stmt)
         model = result.scalars().one()
         return self.mapper.map_to_domain_entity(model)
@@ -45,7 +46,7 @@ class BaseRepository:
         await self.session.execute(add_data_stmt)
     async def edit(self, data: BaseModel, exclude_unset: bool = False, **filter_by) -> None:
         update_stmt = (
-            update(self.model)  
+            update(self.model)
             .filter_by(**filter_by)
             .values(**data.model_dump(exclude_unset=exclude_unset))
         )

@@ -15,13 +15,13 @@ class HotelsRepository(BaseRepository):
     mapper: DataMapper = HotelsDataMapper
 
     async def get_filtered_by_time(
-            self,
-            location: str,
-            title: str,
-            limit: int,
-            offset: int,
-            date_from: date, 
-            date_to: date
+        self,
+        location: str,
+        title: str,
+        limit: int,
+        offset: int,
+        date_from: date,
+        date_to: date,
     ):
 
         rooms_ids_to_get = rooms_ids_for_booking(date_from=date_from, date_to=date_to)
@@ -30,7 +30,6 @@ class HotelsRepository(BaseRepository):
             .select_from(RoomsOrm)
             .filter(RoomsOrm.id.in_(rooms_ids_to_get))
         )
-
 
         query = select(HotelsOrm).filter(HotelsOrm.id.in_(hotels_ids_to_get))
         if location:

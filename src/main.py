@@ -1,4 +1,3 @@
-
 import sys
 from contextlib import asynccontextmanager
 from pathlib import Path
@@ -28,15 +27,15 @@ async def lifespan(app: FastAPI):
     await redis_manager.close()
 
 
-
 app = FastAPI(docs_url=None, lifespan=lifespan)
 
 app.include_router(router_auth)
-app.include_router(router_hotels)          
+app.include_router(router_hotels)
 app.include_router(router_rooms)
 app.include_router(router_bookings)
 app.include_router(router_facilities)
 app.include_router(router_images)
+
 
 @app.get("/docs", include_in_schema=False)
 async def custom_swagger_ui_html():

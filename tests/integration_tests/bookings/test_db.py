@@ -14,13 +14,12 @@ async def test_booking(db):
         price=1000,
     )
 
-    new_booking = await db.bookings.add(booking_data) 
+    new_booking = await db.bookings.add(booking_data)
 
     got_booking_data = await db.bookings.get_one_or_none(id=new_booking.id)
     assert got_booking_data
     assert got_booking_data.user_id == new_booking.user_id
     assert got_booking_data.room_id == new_booking.room_id
-
 
     updated_booking_data = BookingsAdd(
         user_id=user_id,
@@ -30,7 +29,6 @@ async def test_booking(db):
         price=2000,
     )
 
-    
     await db.bookings.edit(updated_booking_data, id=new_booking.id)
     edited_booking_data = await db.bookings.get_one_or_none(id=new_booking.id)
 
@@ -41,4 +39,3 @@ async def test_booking(db):
 
     got_booking_data = await db.bookings.get_one_or_none(id=new_booking.id)
     assert not got_booking_data
-

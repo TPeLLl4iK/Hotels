@@ -14,11 +14,11 @@ async def test_register_flow(
 ):
     
     response_register = await ac.post(
-        '/auth/register',
+        "/auth/register",
         json={
-            'login': login,
-            'password': password,
-        }
+            "login": login,
+            "password": password,
+        },
     )
 
     assert response_register.status_code == status_code
@@ -26,32 +26,32 @@ async def test_register_flow(
         return
 
     response_login = await ac.post(
-        '/auth/login',
+        "/auth/login",
         json={
-            'login': login,
-            'password': password,
-        }
+            "login": login,
+            "password": password,
+        },
     )
 
     assert response_login.status_code == status_code
-    assert ac.cookies['access_token']
-    assert 'access_token' in response_login.json()
+    assert ac.cookies["access_token"]
+    assert "access_token" in response_login.json()
 
     response_me = await ac.get(
-        '/auth/me',
+        "/auth/me",
     )
 
-    #/me
+    # /me
     user = response_me.json()
     assert response_me.status_code == status_code
-    assert login == user['login']
-    assert 'password' not in user
-    assert 'hashed_password' not in user
+    assert login == user["login"]
+    assert "password" not in user
+    assert "hashed_password" not in user
 
     response_logout = await ac.post(
-        '/auth/logout',
+        "/auth/logout",
     )
 
-    #logout
+    # logout
     assert response_logout.status_code == status_code
-    assert 'access_token' not in ac.cookies
+    assert "access_token" not in ac.cookies
