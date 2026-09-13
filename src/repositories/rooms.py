@@ -2,12 +2,13 @@ from datetime import date
 
 from sqlalchemy import select
 from sqlalchemy.orm import selectinload
+from sqlalchemy.exc import NoResultFound
 
 from src.models.rooms import RoomsOrm
 from src.repositories.base import BaseRepository
 from src.repositories.mappers.mappers import RoomsDataMapper, RoomsDataWithRelsMapper
 from src.repositories.utils import rooms_ids_for_booking
-
+from src.exceptions import ObjectNotFoundException, HotelNotFoundHTTPException
 
 class RoomsRepository(BaseRepository):
     model = RoomsOrm
@@ -43,6 +44,7 @@ class RoomsRepository(BaseRepository):
 
         result = await self.session.execute(query)
         model = result.unique().scalars().one_or_none()
+
         if model is None:
             return None
         return RoomsDataWithRelsMapper.map_to_domain_entity(model)

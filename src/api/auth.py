@@ -3,6 +3,7 @@ from fastapi import APIRouter, Body, HTTPException, Response
 from src.api.dependencies import DBDep, UserIdDep
 from src.schemas.users import UsersAdd, UsersRequestAdd
 from src.services.auth import AuthService
+from src.exceptions import ObjectAlreadyExistsException, UserAlreadyExistsHTTPException
 
 router = APIRouter(prefix="/auth", tags=["Авторизация и аутентификация"])
 
@@ -23,15 +24,16 @@ async def register_user(
         }
     ),
 ):
+    hashed_password = AuthService().password_hash.hash(data.password)
+    new_user_data = UsersAdd(login=data.login, hashed_password=hashed_password)
     try:
-        hashed_password = AuthService().password_hash.hash(data.password)
-        new_user_data = UsersAdd(login=data.login, hashed_password=hashed_password)
-        await db.users.add(new_user_data)
-        await db.commit()
-        return {"status": "added"}
-    except:
-        raise HTTPException(status_code=400)
+        data = await db.users.add(new_user_data)
+        
+    except ObjectAlreadyExistsException:
+        raise UserAlreadyExistsHTTPException
 
+    await db.commit()
+    return {"status": "added", 'data': data}
 
 @router.post("/login")
 async def login_user(
